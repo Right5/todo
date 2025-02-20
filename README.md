@@ -3,4 +3,4 @@
 npm install
 npm run start
 
-# ndoe version 20.11.1
+# node version 20.11.1

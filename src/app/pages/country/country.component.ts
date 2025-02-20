@@ -67,7 +67,7 @@ export class CountryComponent {
     this.http
       .get<any>(url)
       .pipe(
-        delay(1000),
+        delay(500),
         catchError((error) => {
           this.error.set(error.message);
           return of(null);

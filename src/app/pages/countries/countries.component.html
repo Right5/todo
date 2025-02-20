@@ -37,7 +37,7 @@
     <div *ngIf="form.get('listView')?.value">
       <div *ngFor="let country of (displayedCountries() || [])"
            (click)="selectCountry(country)"
-           class="border-b border-gray-300 py-2 flex items-center cursor-pointer hover:bg-gray-50">
+           class="border-b border-gray-300 py-2 flex items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
         <img alt="Flag" class="w-8 h-8 mr-4" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
         <span>{{ country.country }}</span>
       </div>
@@ -53,5 +53,5 @@
 </form>
 
 <!-- Loader -->
-<app-loading-card *ngIf="loading()" class="block w-full mt-12" text="Loading countries..."></app-loading-card>
+<app-loading-card *ngIf="loading()" class="block w-full h-screen" text="Loading countries..."></app-loading-card>
 
