@@ -4,13 +4,14 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WeatherResponse } from '../../models/weather-response.model';
-import { catchError, of } from 'rxjs';
+import { catchError, delay, of } from 'rxjs';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { Button } from 'primeng/button';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Tools } from '../../tools/Tools';
+import { LoadingCardComponent } from '../../components/loading-card/loading-card.component';
 
 @Component({
   selector: 'app-country',
@@ -21,7 +22,8 @@ import { Tools } from '../../tools/Tools';
     ProgressSpinner,
     Button,
     ToggleSwitch,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingCardComponent
   ],
   templateUrl: './country.component.html',
   styleUrl: './country.component.css'
@@ -68,6 +70,7 @@ export class CountryComponent {
     this.http
       .get<any>(url)
       .pipe(
+        delay(1000),
         catchError((error) => {
           this.error.set(error.message);
           return of(null);

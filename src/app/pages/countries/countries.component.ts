@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { Country } from '../../models/country.model';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
-import { catchError, debounceTime, map, of } from 'rxjs';
+import { catchError, debounceTime, delay, map, of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { Tools } from '../../tools/Tools';
 import { ToggleSwitch } from 'primeng/toggleswitch';
+import { LoadingCardComponent } from '../../components/loading-card/loading-card.component';
 
 @Component({
   selector: 'app-countries',
@@ -21,7 +22,8 @@ import { ToggleSwitch } from 'primeng/toggleswitch';
     ErrorCardComponent,
     ReactiveFormsModule,
     InputText,
-    ToggleSwitch
+    ToggleSwitch,
+    LoadingCardComponent
   ],
   templateUrl: './countries.component.html',
   styleUrls: ['./countries.component.css']
@@ -69,6 +71,7 @@ export class CountriesComponent implements OnInit {
     this.http
       .get<any>('https://countriesnow.space/api/v0.1/countries')
       .pipe(
+        delay(500),
         catchError(() => {
           this.error.set('failed to load countries');
           return of([]);

@@ -50,8 +50,8 @@
 
   <app-error-card *ngIf="error()" (retry)="loadCountries()" [error]="error" class="block mt-4"></app-error-card>
 
-  <!-- Loader -->
-  <div *ngIf="loading()" class="flex items-center justify-center w-full mt-12">
-    <p-progress-spinner ariaLabel="loading"></p-progress-spinner>
-  </div>
 </form>
+
+<!-- Loader -->
+<app-loading-card *ngIf="loading()" class="block w-full mt-12" text="Loading countries..."></app-loading-card>
+
