@@ -6,11 +6,20 @@ import { CommonModule } from '@angular/common';
 import { Country } from '../../models/country.model';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
-import { catchError, map, of } from 'rxjs';
+import { catchError, debounceTime, map, of } from 'rxjs';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-countries',
-  imports: [CommonModule, Card, ProgressSpinner, ErrorCardComponent],
+  imports: [
+    CommonModule,
+    Card,
+    ProgressSpinner,
+    ErrorCardComponent,
+    ReactiveFormsModule,
+    InputText
+  ],
   templateUrl: './countries.component.html',
   styleUrls: ['./countries.component.css']
 })
@@ -25,11 +34,22 @@ export class CountriesComponent implements OnInit {
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
 
+  form = new FormGroup({
+    searchControl: new FormControl('')
+  });
+
   // Number of items to add per scroll.
   private itemsToShow = 20;
 
   ngOnInit() {
     this.loadCountries();
+
+    // Listen for changes in the search input and filter countries.
+    this.form.get('searchControl')?.valueChanges
+      .pipe(debounceTime(220))
+      .subscribe((value) => {
+      this.filterCountries(value || '');
+    });
   }
 
   loadCountries() {
@@ -39,7 +59,7 @@ export class CountriesComponent implements OnInit {
       .get<any>('https://countriesnow.space/api/v0.1/countries')
       .pipe(
         catchError((error) => {
-          this.error.set(error.message);
+          this.error.set('failed to load countries');
           return of([]);
         }),
         map((response) => response.data)
@@ -58,8 +78,26 @@ export class CountriesComponent implements OnInit {
       });
   }
 
-  // Load the next batch of countries into displayedCountries.
+  // Filter the countries based on the search term.
+  filterCountries(searchTerm: string) {
+    if (!searchTerm) {
+      // If the search term is cleared, reset displayedCountries and load the initial batch.
+      this.displayedCountries.set([]);
+      this.loadMore();
+    } else {
+      const filtered = this.countries().filter((country) =>
+        country.country.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      this.displayedCountries.set(filtered);
+    }
+  }
+
+  // Load the next batch of countries into displayedCountries (only when not filtering).
   loadMore() {
+    if (this.form.get('searchControl')?.value) {
+      // If a search term is active, don't use lazy loading.
+      return;
+    }
     const currentLength = this.displayedCountries().length;
     const nextBatch = this.countries().slice(currentLength, currentLength + this.itemsToShow);
     this.displayedCountries.update((prev) => [...prev, ...nextBatch]);
@@ -78,7 +116,7 @@ export class CountriesComponent implements OnInit {
   @HostListener('window:scroll', [])
   onWindowScroll() {
     // Check if we are at the bottom of the page.
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+    if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
       this.loadMore();
     }
   }

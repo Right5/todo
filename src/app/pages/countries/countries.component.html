@@ -1,24 +1,32 @@
 <div *ngIf="!loading()">
   <h1 class="text-3xl font-bold mb-8">Select country to get weather</h1>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-    <div
-      *ngFor="let country of (displayedCountries() || [])"
-      (click)="selectCountry(country)"
-    >
-      <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105">
-        <ng-template #header>
-          <img alt="Card" class="w-full" [src]="getCountryFlagLink(country)" />
-        </ng-template>
-        <ng-template #title> {{ country.country }}</ng-template>
-      </p-card>
-    </div>
+  <!-- Search input using Reactive Forms and PrimeNG -->
+  <div *ngIf="!error()">
+    <form class="mb-4" [formGroup]="form">
+      <input type="text" pInputText formControlName="searchControl" placeholder="Search by country name" />
+    </form>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <div *ngFor="let country of (displayedCountries() || [])" (click)="selectCountry(country)">
+        <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105">
+          <ng-template #header>
+            <img alt="Card" class="w-full" [src]="getCountryFlagLink(country)" />
+          </ng-template>
+          <ng-template #title>
+            {{ country.country }}
+          </ng-template>
+        </p-card>
+      </div>
+
+      <div *ngIf="displayedCountries()?.length === 0" class="text-center w-full">
+        <p>No countries found</p>
+      </div>
+  </div>
+    <app-error-card *ngIf="error()" (retry)="loadCountries()" [error]="error" class="block mt-4"></app-error-card>
   </div>
 
-  <app-error-card *ngIf="error()" (retry)="loadCountries()" [error]="error" class="block mt-4"></app-error-card>
-</div>
-
-<!-- loader -->
-<div *ngIf="loading()" class="flex items-center justify-center w-full mt-12">
-  <p-progress-spinner ariaLabel="loading" class="" />
-</div>
+  <!-- Loader -->
+  <div *ngIf="loading()" class="flex items-center justify-center w-full mt-12">
+    <p-progress-spinner ariaLabel="loading"></p-progress-spinner>
+  </div>
