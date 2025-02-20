@@ -10,6 +10,7 @@ import { catchError, debounceTime, map, of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
 import { Tools } from '../../tools/Tools';
+import { ToggleSwitch } from 'primeng/toggleswitch';
 
 @Component({
   selector: 'app-countries',
@@ -19,7 +20,8 @@ import { Tools } from '../../tools/Tools';
     ProgressSpinner,
     ErrorCardComponent,
     ReactiveFormsModule,
-    InputText
+    InputText,
+    ToggleSwitch
   ],
   templateUrl: './countries.component.html',
   styleUrls: ['./countries.component.css']
@@ -37,7 +39,8 @@ export class CountriesComponent implements OnInit {
   error = signal<string | null>(null);
 
   form = new FormGroup({
-    searchControl: new FormControl('')
+    searchControl: new FormControl(''),
+    listView: new FormControl(localStorage.getItem('listView') === 'true' || false)
   });
 
   // Number of items to add per scroll.
@@ -53,6 +56,11 @@ export class CountriesComponent implements OnInit {
       .subscribe((value) => {
         this.filterCountries(value || '');
       });
+
+    // Listen for changes in the list view toggle.
+    this.form.get('listView')?.valueChanges.subscribe((val) => {
+      localStorage.setItem('listView', val ? 'true' : 'false');
+    });
   }
 
   loadCountries() {
@@ -61,7 +69,7 @@ export class CountriesComponent implements OnInit {
     this.http
       .get<any>('https://countriesnow.space/api/v0.1/countries')
       .pipe(
-        catchError((error) => {
+        catchError(() => {
           this.error.set('failed to load countries');
           return of([]);
         }),
@@ -109,10 +117,6 @@ export class CountriesComponent implements OnInit {
   selectCountry(country: Country) {
     // Navigate to the weather page using the country name.
     this.router.navigate(['/countries', country.country]);
-  }
-
-  getCountryFlagLink(country: Country): string {
-    return `https://cdn.jsdelivr.net/gh/hampusborgos/country-flags@main/svg/${country.iso2.toLowerCase()}.svg`;
   }
 
   // Listen to window scroll events.
