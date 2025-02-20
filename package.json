@@ -1,5 +1,5 @@
 {
-  "name": "emptyAngularApp",
+  "name": "weatherApp",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -15,6 +15,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-eslint/eslint-plugin": "^19.1.0",
     "@angular/animations": "19.1.6",
     "@angular/cli": "19.1.6",
     "@angular/common": "19.1.6",
@@ -34,6 +35,8 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "19.1.6",
+    "@angular-eslint/eslint-plugin-template": "^19.1.0",
+    "@angular-eslint/template-parser": "^19.1.0",
     "@angular/compiler-cli": "19.1.6",
     "@types/jasmine": "~5.1.0",
     "@typescript-eslint/eslint-plugin": "^8.24.1",

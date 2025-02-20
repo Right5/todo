@@ -11,5 +11,5 @@ import { ButtonModule } from 'primeng/button';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'emptyAngularApp';
+  title = 'weatherApp';
 }
