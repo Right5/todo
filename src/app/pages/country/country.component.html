@@ -1,0 +1,36 @@
+<div class="flex justify-between g-2">
+  <p-button (click)="router.navigate(['/countries'])" class="font-bold block mb-4 ">Back</p-button>
+
+  <form [formGroup]="form" class="flex mb-4 flex gap-2 items-center">
+    <p-toggleswitch formControlName="unitControl"></p-toggleswitch>
+    <span class="w-[8rem] pb-2">{{ form.get('unitControl')?.value ? 'Metric (°C, m/s)' : 'Imperial (°F, mph)' }}</span>
+  </form>
+</div>
+
+
+<div *ngIf="!loading()">
+
+  <h2 class="text-3xl font-bold mb-6">Weather for {{ country() }}</h2>
+
+  <p-card class="block">
+    <ng-container *ngIf="weather() as weather">
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <div>
+          <p>Temperature: {{ weather.main.temp }} {{ isMetric() ? '°C' : '°F' }}</p>
+          <p>Precipitation: {{ weather.weather[0].description }}</p>
+          <p>Wind: {{ weather.wind.speed }} {{ isMetric() ? 'm/s' : 'mph' }}</p>
+        </div>
+        <img alt="Card" class="w-full" [src]="tools.getCountryFlagLinkByIso2(weather.sys.country)" class="hidden md:block" />
+      </div>
+    </ng-container>
+  </p-card>
+
+
+  <app-error-card *ngIf="error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
+</div>
+
+<!-- loader -->
+<div *ngIf="loading()" class="flex items-center justify-center w-full mt-12">
+  <p-progress-spinner ariaLabel="loading" class="" />
+</div>
+
