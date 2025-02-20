@@ -9,8 +9,8 @@
     "test": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "format": "prettier --write \"src/**/*.{ts,html,scss}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,html,scss}\"",
+    "format": "prettier --write \"src/**/*.{ts,html,css}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,html,css}\"",
     "prepare": "husky install"
   },
   "private": true,
@@ -26,8 +26,10 @@
     "@angular/platform-browser-dynamic": "19.1.6",
     "@angular/router": "19.1.6",
     "@primeng/themes": "19.0.6",
+    "@tailwindcss/postcss": "^4.0.7",
     "install": "^0.13.0",
     "npm": "^11.1.0",
+    "postcss": "^8.5.3",
     "primeng": "^19.0.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -51,10 +53,11 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
+    "tailwindcss": "^4.0.7",
     "typescript": "~5.7.2"
   },
   "lint-staged": {
-    "src/**/*.{ts,html,scss}": [
+    "src/**/*.{ts,html,css}": [
       "eslint --fix",
       "prettier --write"
     ]

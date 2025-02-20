@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-countries',
   imports: [CommonModule, Card],
   templateUrl: './countries.component.html',
-  styleUrl: './countries.component.scss'
+  styleUrl: './countries.component.css'
 })
 export class CountriesComponent {
   http = inject(HttpClient);

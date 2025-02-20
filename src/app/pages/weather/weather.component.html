@@ -12,6 +12,7 @@
   </div>
 
   <!-- loader -->
-  <p-progress-spinner *ngIf="loading()" class="" ariaLabel="loading" />
-
+  <div *ngIf="loading()" class="flex items-center justify-center w-full h-screen mt-8">
+    <p-progress-spinner ariaLabel="loading" />
+  </div>
 </div>

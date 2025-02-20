@@ -3,7 +3,6 @@ import { Card } from 'primeng/card';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { WeatherResponse } from '../../models/weather-response.model';
 import { catchError, delay, of } from 'rxjs';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
@@ -13,7 +12,7 @@ import { ProgressSpinner } from 'primeng/progressspinner';
   selector: 'app-weather',
   imports: [CommonModule, Card, ErrorCardComponent, ProgressSpinner],
   templateUrl: './weather.component.html',
-  styleUrl: './weather.component.scss'
+  styleUrl: './weather.component.css'
 })
 export class WeatherComponent {
   http = inject(HttpClient);
@@ -52,7 +51,7 @@ export class WeatherComponent {
       )
       .subscribe((response) => {
         this.weather.set(response);
-        this.loading.set(false);
+        //this.loading.set(false);
       });
   }
 }
