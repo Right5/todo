@@ -11,7 +11,7 @@
       <div *ngFor="let country of (displayedCountries() || [])" (click)="selectCountry(country)">
         <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105">
           <ng-template #header>
-            <img alt="Card" class="w-full" [src]="getCountryFlagLink(country)" />
+            <img alt="Card" class="w-full" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
           </ng-template>
           <ng-template #title>
             {{ country.country }}

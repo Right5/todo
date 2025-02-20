@@ -9,6 +9,7 @@ import { ErrorCardComponent } from '../../components/error-card/error-card.compo
 import { catchError, debounceTime, map, of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { InputText } from 'primeng/inputtext';
+import { Tools } from '../../tools/Tools';
 
 @Component({
   selector: 'app-countries',
@@ -26,6 +27,7 @@ import { InputText } from 'primeng/inputtext';
 export class CountriesComponent implements OnInit {
   http = inject(HttpClient);
   router = inject(Router);
+  tools = Tools;
 
   // Full list of countries from API.
   countries = signal<Country[]>([]);
@@ -45,11 +47,12 @@ export class CountriesComponent implements OnInit {
     this.loadCountries();
 
     // Listen for changes in the search input and filter countries.
-    this.form.get('searchControl')?.valueChanges
-      .pipe(debounceTime(220))
+    this.form
+      .get('searchControl')
+      ?.valueChanges.pipe(debounceTime(220))
       .subscribe((value) => {
-      this.filterCountries(value || '');
-    });
+        this.filterCountries(value || '');
+      });
   }
 
   loadCountries() {
