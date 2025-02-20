@@ -39,7 +39,7 @@ export class CountriesComponent implements OnInit {
 
   form = new FormGroup({
     searchControl: new FormControl(''),
-    listView: new FormControl(localStorage.getItem('listView') === 'true' || false)
+    listView: new FormControl(localStorage.getItem('listView') !== 'false')
   });
 
   // Number of items to add per scroll.

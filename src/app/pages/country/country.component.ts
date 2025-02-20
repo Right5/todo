@@ -23,7 +23,7 @@ import { LoadingCardComponent } from '../../components/loading-card/loading-card
     ReactiveFormsModule,
     LoadingCardComponent
   ],
-  templateUrl: './country.component.html',
+  templateUrl: './country.component.html'
 })
 export class CountryComponent {
   http = inject(HttpClient);

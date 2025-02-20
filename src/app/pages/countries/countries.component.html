@@ -1,19 +1,19 @@
 <form *ngIf="!loading()" [formGroup]="form">
-  <h1 class="text-3xl font-bold mb-8">Select country to get weather</h1>
+  <h1 class="text-2xl font-bold mb-4">Select country to get weather</h1>
 
-  <!-- Search input -->
   <div *ngIf="!error()">
-
-    <div class="flex justify-between g-2">
+    <div class="grid grid-cols-8 overflow-y-auto items-center gap-2 mb-5">
       <!-- search input -->
-      <div class="mb-4">
-        <input type="text" pInputText formControlName="searchControl" placeholder="Search by country name" />
-      </div>
+      <input pInputText
+             type="text"
+             formControlName="searchControl"
+             placeholder="Search by country name"
+             class="col-span-5 sm:col-span-4 md:col-span-3 dark:bg-gray-500 dark:text-gray-100" />
       <!-- Toggle view mode: Grid vs. List -->
-      <div class="flex items-center mb-4">
-        <span class="mr-2">Grid</span>
-        <p-toggleswitch formControlName="listView"></p-toggleswitch>
-        <span class="ml-2">List</span>
+      <div class="col-span-3 sm:col-span-2 md:col-span-5 flex items-center justify-end">
+        <span>Grid</span>
+        <p-toggleswitch formControlName="listView" class="mx-2 mt-1"></p-toggleswitch>
+        <span>List</span>
       </div>
     </div>
 
@@ -21,9 +21,9 @@
     <div *ngIf="!form.get('listView')?.value">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div *ngFor="let country of (displayedCountries() || [])" (click)="selectCountry(country)">
-          <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105">
+          <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105 overflow-hidden">
             <ng-template #header>
-              <img alt="Card" class="w-full" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
+              <img alt="Card" class="w-full rounded-t-lg" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
             </ng-template>
             <ng-template #title>
               {{ country.country }}
@@ -34,7 +34,7 @@
     </div>
 
     <!-- List View (Narrow Rows) -->
-    <div *ngIf="form.get('listView')?.value">
+    <div *ngIf="form.get('listView')?.value" class="mx-0.5 -mt-2">
       <div *ngFor="let country of (displayedCountries() || [])"
            (click)="selectCountry(country)"
            class="border-b border-gray-300 py-2 flex items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">

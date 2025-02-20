@@ -1,38 +1,47 @@
 <div class="flex justify-between g-2">
-  <p-button (click)="router.navigate(['/countries'])" class="font-bold block mb-4 ">Back</p-button>
+  <p-button (click)="router.navigate(['/countries'])" class="font-bold block mb-4">Back</p-button>
 
   <form [formGroup]="form" class="flex mb-4 flex gap-2 items-center">
     <p-toggleswitch formControlName="unitControl"></p-toggleswitch>
-    <span class="w-[8rem] pb-2">{{ form.get('unitControl')?.value ? 'Metric (°C, m/s)' : 'Imperial (°F, mph)' }}</span>
+    <span class="w-[8rem] pb-2">
+      {{ form.get('unitControl')?.value ? 'Metric (°C, m/s)' : 'Imperial (°F, mph)' }}
+    </span>
   </form>
 </div>
 
 <div *ngIf="!loading()">
+  <ng-container *ngIf="weather() as weather">
+    <h2 class="text-3xl font-bold mb-3 flex items-center">
+      Weather for {{ country() }}
+      <img alt="Country Flag" class="w-7 h-7 ml-4" [src]="tools.getCountryFlagLinkByIso2(weather.sys.country)" />
+      <img alt="Weather Icon" class="w-12 h-12 ml-2" [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'" />
+    </h2>
 
-  <h2 class="text-3xl font-bold mb-6">Weather for {{ country() }}</h2>
-
-  <p-card class="block">
-    <ng-container *ngIf="weather() as weather">
-      <div class="grid grid-cols-1 md:grid-cols-2">
+    <p-card styleClass="block dark:bg-red-400 dark:text-red-100">
+      <div class="grid grid-cols-1 gap-4">
         <div>
-          <div class="">
-            <span>Temperature: {{ weather.main.temp }} {{ isMetric() ? '°C' : '°F' }}</span>
-          </div>
-          <div class="">
-            <span>Precipitation: {{ weather.weather[0].description }}</span>
-          </div>
-          <div class="">
-            <span>Wind: {{ weather.wind.speed }} {{ isMetric() ? 'm/s' : 'mph' }}</span>
-          </div>
+          <p><strong>Temperature:</strong> {{ weather.main.temp }} {{ isMetric() ? '°C' : '°F' }}</p>
+          <p><strong>Feels Like:</strong> {{ weather.main.feels_like }} {{ isMetric() ? '°C' : '°F' }}</p>
+          <p><strong>Min Temperature:</strong> {{ weather.main.temp_min }} {{ isMetric() ? '°C' : '°F' }}</p>
+          <p><strong>Max Temperature:</strong> {{ weather.main.temp_max }} {{ isMetric() ? '°C' : '°F' }}</p>
+          <p><strong>Precipitation:</strong> {{ weather.weather[0].description }}</p>
+          <p>
+            <strong>Wind:</strong> {{ weather.wind.speed }} {{ isMetric() ? 'm/s' : 'mph' }}
+            (Direction: {{ weather.wind.deg }}°
+            <span *ngIf="weather.wind.gust">, Gust: {{ weather.wind.gust }} {{ isMetric() ? 'm/s' : 'mph' }}</span>)
+          </p>
+          <p><strong>Pressure:</strong> {{ weather.main.pressure }} hPa</p>
+          <p><strong>Humidity:</strong> {{ weather.main.humidity }}%</p>
+          <p><strong>Visibility:</strong> {{ weather.visibility }} m</p>
+          <p><strong>Cloudiness:</strong> {{ weather.clouds.all }}%</p>
+          <p><strong>Sunrise:</strong> {{ weather.sys.sunrise * 1000 | date:'shortTime' }}</p>
+          <p><strong>Sunset:</strong> {{ weather.sys.sunset * 1000 | date:'shortTime' }}</p>
         </div>
-        <img alt="Card" class="w-full" [src]="tools.getCountryFlagLinkByIso2(weather.sys.country)"
-             class="hidden md:block" />
       </div>
-    </ng-container>
-  </p-card>
+    </p-card>
 
-
-  <app-error-card *ngIf="error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
+    <app-error-card *ngIf="error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
+  </ng-container>
 </div>
 
 <!-- loader -->
