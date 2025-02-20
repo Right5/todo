@@ -6,8 +6,7 @@ import { TopBarComponent } from './layout/top-bar/top-bar.component';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, TopBarComponent],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
   title = 'Weather app';

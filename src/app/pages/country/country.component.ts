@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { WeatherResponse } from '../../models/weather-response.model';
 import { catchError, delay, of } from 'rxjs';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
-import { ProgressSpinner } from 'primeng/progressspinner';
 import { Button } from 'primeng/button';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -19,14 +18,12 @@ import { LoadingCardComponent } from '../../components/loading-card/loading-card
     CommonModule,
     Card,
     ErrorCardComponent,
-    ProgressSpinner,
     Button,
     ToggleSwitch,
     ReactiveFormsModule,
     LoadingCardComponent
   ],
   templateUrl: './country.component.html',
-  styleUrl: './country.component.css'
 })
 export class CountryComponent {
   http = inject(HttpClient);

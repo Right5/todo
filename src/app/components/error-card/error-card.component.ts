@@ -5,8 +5,7 @@ import { Button } from 'primeng/button';
 @Component({
   selector: 'app-error-card',
   imports: [Card, Button],
-  templateUrl: './error-card.component.html',
-  styleUrl: './error-card.component.css'
+  templateUrl: './error-card.component.html'
 })
 export class ErrorCardComponent {
   @Input({ required: true }) error = signal<string | null>(null);

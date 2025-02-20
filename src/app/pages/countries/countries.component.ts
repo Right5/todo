@@ -4,7 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Country } from '../../models/country.model';
-import { ProgressSpinner } from 'primeng/progressspinner';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
 import { catchError, debounceTime, delay, map, of } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -18,15 +17,13 @@ import { LoadingCardComponent } from '../../components/loading-card/loading-card
   imports: [
     CommonModule,
     Card,
-    ProgressSpinner,
     ErrorCardComponent,
     ReactiveFormsModule,
     InputText,
     ToggleSwitch,
     LoadingCardComponent
   ],
-  templateUrl: './countries.component.html',
-  styleUrls: ['./countries.component.css']
+  templateUrl: './countries.component.html'
 })
 export class CountriesComponent implements OnInit {
   http = inject(HttpClient);
