@@ -23,7 +23,7 @@
 
         <div *ngFor="let country of (displayedCountries() || [])"
              (click)="selectCountry(country)"
-             class="rounded-lg shadow overflow-hidden  text-black  bg-white dark:text-white dark:bg-slate-700 h-fit cursor-pointer transition-transform duration-160 hover:scale-105"
+             class="rounded-lg shadow overflow-hidden text-black bg-white dark:text-white dark:bg-slate-700 h-fit cursor-pointer transition-transform duration-160 hover:scale-105"
         >
           <div>
             <img alt="Card" class="w-full rounded-t-lg" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />

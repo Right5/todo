@@ -19,7 +19,7 @@
   <ng-container *ngIf="weather() as weather">
 
       <div class="rounded-lg shadow overflow-hidden pl-4 grid grid-cols-4 gap-2 text-white  bg-white dark:bg-slate-700">
-        <span class="col-span-2 text-xl flex items-center text-slate-900 dark:text-white ">{{ weather.weather[0].description }}</span>
+        <span class="col-span-2 text-xl flex items-center text-slate-900 dark:text-white py-4">{{ weather.weather[0].description }}</span>
         <span class="col-span-2 flex justify-end">
             <img *ngIf="weather.weather[0].icon !== '01n'" alt="Weather Icon" class="w-20 h-20 bg-slate-700 rounded-r-lg"
                  [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'" />
@@ -29,8 +29,6 @@
       <div class="rounded-lg shadow overflow-hidden bg-white dark:bg-slate-700 p-4 grid grid-cols-1 md:grid-cols-2 gap-1 mt-4">
         <p><strong>Temperature:</strong> {{ weather.main.temp }} {{ isMetric() ? '°C' : '°F' }}</p>
         <p><strong>Feels Like:</strong> {{ weather.main.feels_like }} {{ isMetric() ? '°C' : '°F' }}</p>
-        <p><strong>Min Temperature:</strong> {{ weather.main.temp_min }} {{ isMetric() ? '°C' : '°F' }}</p>
-        <p><strong>Max Temperature:</strong> {{ weather.main.temp_max }} {{ isMetric() ? '°C' : '°F' }}</p>
         <p>
           <strong>Wind:</strong> {{ weather.wind.speed }} {{ isMetric() ? 'm/s' : 'mph' }}
           (Direction: {{ weather.wind.deg }}°
