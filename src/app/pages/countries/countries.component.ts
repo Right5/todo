@@ -1,5 +1,4 @@
 import { Component, HostListener, inject, OnInit, signal } from '@angular/core';
-import { Card } from 'primeng/card';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -16,7 +15,6 @@ import { LoadingCardComponent } from '../../components/loading-card/loading-card
   selector: 'app-countries',
   imports: [
     CommonModule,
-    Card,
     ErrorCardComponent,
     ReactiveFormsModule,
     InputText,

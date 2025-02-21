@@ -30,18 +30,6 @@
           </div>
           <div class="p-4 text-xl">{{ country.country }}</div>
         </div>
-
-
-        <div *ngFor="let country of (displayedCountries() || [])" (click)="selectCountry(country)">
-          <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105 overflow-hidden">
-            <ng-template #header>
-              <img alt="Card" class="w-full rounded-t-lg" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
-            </ng-template>
-            <ng-template #title>
-              {{ country.country }}
-            </ng-template>
-          </p-card>
-        </div>
       </div>
     </div>
 
