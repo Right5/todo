@@ -37,7 +37,7 @@ export class CountryComponent {
   isMetric = signal<boolean>(true);
 
   form = new FormGroup({
-    unitControl: new FormControl(true)
+    unitControl: new FormControl(localStorage.getItem('isMetric') === 'true')
   });
 
   constructor() {
@@ -46,6 +46,7 @@ export class CountryComponent {
     });
 
     this.form.get('unitControl')?.valueChanges.subscribe((val) => {
+      localStorage.setItem('isMetric', val ? 'true' : 'false');
       this.isMetric.set(val || false);
       this.loadWeather();
     });

@@ -1,31 +1,32 @@
 <h2 class="text-2xl md:text-3xl mb-6 flex items-center gap-3 md:gap:4">
   Weather for {{ country() }}
-  <img *ngIf="weather() as weather" alt="Country Flag" class="w-8 h-8" [src]="tools.getCountryFlagLinkByIso2(weather.sys.country)" />
+  <img *ngIf="weather() as weather" alt="Country Flag" class="w-8 h-8"
+       [src]="tools.getCountryFlagLinkByIso2(weather.sys.country)" />
 </h2>
 
 <form [formGroup]="form" class="flex items-center justify-between mb-3">
   <a routerLink="/countries"
      class="flex items-center  text-black dark:text-gray-50 hover:text-gray-600"
-  ><i class="pi pi-angle-left" style="font-size: 1.4rem;"></i>Back</a>
-  <div class="flex gap-2 items-center">
+  ><i class="pi pi-angle-left" style="font-size: 1.2rem;"></i>Back</a>
+  <div class="flex gap-2 items-center" *ngIf="!error()">
     <span class="pb-1.5">Imperial</span>
     <p-toggleswitch formControlName="unitControl"></p-toggleswitch>
     <span class="pb-1.5">Metric</span>
   </div>
 </form>
 
-<div *ngIf="!loading()">
+<div *ngIf="!loading() && !error()">
   <ng-container *ngIf="weather() as weather">
-    <p-card>
-        <div class="grid grid-cols-4 gap-2 h-[80px]">
-          <span class="col-span-2 text-xl flex items-center">{{weather.weather[0].description}}</span>
-          <span class="col-span-2 flex justify-end md:justify-start">
-            <img *ngIf="weather.weather[0].icon !== '01n'" alt="Weather Icon" class="w-20 h-20 -ml-4"
+
+      <div class="rounded-lg shadow overflow-hidden pl-4 grid grid-cols-4 gap-2 text-white  bg-white dark:bg-slate-600">
+        <span class="col-span-2 text-xl flex items-center text-slate-900 dark:text-white ">{{ weather.weather[0].description }}</span>
+        <span class="col-span-2 flex justify-end">
+            <img *ngIf="weather.weather[0].icon !== '01n'" alt="Weather Icon" class="w-20 h-20 bg-slate-600 rounded-r-lg"
                  [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'" />
           </span>
-        </div>
+      </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-1 mt-6">
+      <div class="rounded-lg shadow overflow-hidden bg-white dark:bg-slate-600 p-4 grid grid-cols-1 md:grid-cols-2 gap-1 mt-4">
         <p><strong>Temperature:</strong> {{ weather.main.temp }} {{ isMetric() ? '°C' : '°F' }}</p>
         <p><strong>Feels Like:</strong> {{ weather.main.feels_like }} {{ isMetric() ? '°C' : '°F' }}</p>
         <p><strong>Min Temperature:</strong> {{ weather.main.temp_min }} {{ isMetric() ? '°C' : '°F' }}</p>
@@ -42,9 +43,6 @@
         <p><strong>Sunrise:</strong> {{ weather.sys.sunrise * 1000 | date:'shortTime' }}</p>
         <p><strong>Sunset:</strong> {{ weather.sys.sunset * 1000 | date:'shortTime' }}</p>
       </div>
-    </p-card>
-
-
   </ng-container>
 
   <app-error-card *ngIf="error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
