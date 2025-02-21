@@ -32,18 +32,22 @@ export class CountryComponent {
   weather = signal<WeatherResponse | null>(null);
   loading = signal<boolean>(true);
   error = signal<string | null>(null);
-  isMetric = signal<boolean>(true);
+  isMetric = signal<boolean>(false);
 
   form = new FormGroup({
-    unitControl: new FormControl(localStorage.getItem('isMetric') === 'true')
+    isMetric: new FormControl(localStorage.getItem('isMetric') === 'true')
   });
 
   constructor() {
+    if (localStorage.getItem('isMetric') === 'true') {
+      this.isMetric.set(true);
+    }
+
     this.route.params.subscribe((params) => {
       this.country.set(params['country']);
     });
 
-    this.form.get('unitControl')?.valueChanges.subscribe((val) => {
+    this.form.get('isMetric')?.valueChanges.subscribe((val) => {
       localStorage.setItem('isMetric', val ? 'true' : 'false');
       this.isMetric.set(val || false);
       this.loadWeather();
