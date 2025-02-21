@@ -62,6 +62,7 @@ export class CountriesComponent implements OnInit {
 
   loadCountries() {
     this.loading.set(true);
+    this.error.set(null);
 
     this.http
       .get<any>('https://countriesnow.space/api/v0.1/countries')

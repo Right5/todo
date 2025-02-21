@@ -42,9 +42,9 @@
         <p><strong>Sunset:</strong> {{ weather.sys.sunset * 1000 | date:'shortTime' }}</p>
       </div>
   </ng-container>
-
-  <app-error-card *ngIf="error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
 </div>
+
+<app-error-card *ngIf="!loading() && error()" (retry)="loadWeather()" [error]="error" class="block mt-4"></app-error-card>
 
 <!-- loader -->
 <app-loading-card *ngIf="loading()" class="block w-full h-screen" text="Loading country weather..."></app-loading-card>

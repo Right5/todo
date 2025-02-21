@@ -66,13 +66,16 @@ export class CountryComponent {
       .get<any>(url)
       .pipe(
         delay(500),
-        catchError((error) => {
-          this.error.set(error.message);
+        catchError(() => {
+          this.error.set('An error occurred while loading the weather.');
           return of(null);
         })
       )
       .subscribe((response) => {
         this.weather.set(response);
+        if (response) {
+          this.error.set(null);
+        }
         this.loading.set(false);
       });
   }

@@ -1,6 +1,5 @@
 <p-card>
-  <ng-template #title> Opps! </ng-template>
-  <ng-template #subtitle> Something went wrong </ng-template>
+  <ng-template #title> Something went wrong! </ng-template>
   <p>{{ error() }}</p>
-  <p-button label="Retry" (click)="retry.emit()"></p-button>
+  <p-button label="Retry" (click)="retry.emit()" class="block mt-4"></p-button>
 </p-card>
