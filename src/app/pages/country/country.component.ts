@@ -1,12 +1,11 @@
 import { Component, effect, inject, signal } from '@angular/core';
 import { Card } from 'primeng/card';
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { WeatherResponse } from '../../models/weather-response.model';
 import { catchError, delay, of } from 'rxjs';
 import { ErrorCardComponent } from '../../components/error-card/error-card.component';
-import { Button } from 'primeng/button';
 import { ToggleSwitch } from 'primeng/toggleswitch';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Tools } from '../../tools/Tools';
@@ -18,10 +17,10 @@ import { LoadingCardComponent } from '../../components/loading-card/loading-card
     CommonModule,
     Card,
     ErrorCardComponent,
-    Button,
     ToggleSwitch,
     ReactiveFormsModule,
-    LoadingCardComponent
+    LoadingCardComponent,
+    RouterLink
   ],
   templateUrl: './country.component.html'
 })

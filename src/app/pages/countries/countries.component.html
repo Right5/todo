@@ -1,5 +1,5 @@
 <form *ngIf="!loading()" [formGroup]="form">
-  <h1 class="text-2xl font-bold mb-4">Select country to get weather</h1>
+  <h1 class="text-2xl md:text-3xl mb-6">Select country to get weather</h1>
 
   <div *ngIf="!error()">
     <div class="grid grid-cols-8 overflow-y-auto items-center gap-2 mb-5">
@@ -12,13 +12,13 @@
       <!-- Toggle view mode: Grid vs. List -->
       <div class="col-span-3 sm:col-span-2 md:col-span-5 flex items-center justify-end">
         <span>Grid</span>
-        <p-toggleswitch formControlName="listView" class="mx-2 mt-1"></p-toggleswitch>
+        <p-toggleswitch formControlName="listView" class="mx-2 mt-1.5"></p-toggleswitch>
         <span>List</span>
       </div>
     </div>
 
     <!-- Grid View -->
-    <div *ngIf="!form.get('listView')?.value">
+    <div *ngIf="!form.get('listView')?.value" class="mt-7">
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         <div *ngFor="let country of (displayedCountries() || [])" (click)="selectCountry(country)">
           <p-card class="cursor-pointer block transition-transform duration-160 hover:scale-105 overflow-hidden">
@@ -34,10 +34,10 @@
     </div>
 
     <!-- List View (Narrow Rows) -->
-    <div *ngIf="form.get('listView')?.value" class="mx-0.5 -mt-2">
+    <div *ngIf="form.get('listView')?.value" class="mx-0.5">
       <div *ngFor="let country of (displayedCountries() || [])"
            (click)="selectCountry(country)"
-           class="border-b border-gray-300 py-2 flex items-center cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800">
+           class="border-b border-gray-300 py-2 flex items-center cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800">
         <img alt="Flag" class="w-8 h-8 mr-4" [src]="tools.getCountryFlagLinkByIso2(country.iso2)" />
         <span>{{ country.country }}</span>
       </div>
